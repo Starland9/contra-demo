@@ -3,7 +3,7 @@ class_name Bullet
 
 @onready var screen_size = get_viewport_rect().size
 
-var speed = 30000
+var speed = 20000
 var direction = 1
 
 
@@ -17,6 +17,6 @@ func _process(delta: float) -> void:
 	velocity.x = speed * delta * direction
 	move_and_slide()
 
-	if global_position.x > screen_size.x or global_position.x < 0:
-		print("bullet out of screen")
-		queue_free()
+
+func _on_end_time_timeout() -> void:
+	queue_free()

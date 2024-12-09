@@ -1,7 +1,12 @@
-[gd_scene load_steps=36 format=3 uid="uid://ccjosrnasvp6k"]
+[gd_scene load_steps=41 format=3 uid="uid://ccjosrnasvp6k"]
 
 [ext_resource type="Script" path="res://actors/player/player.gd" id="1_4sbx4"]
 [ext_resource type="Texture2D" uid="uid://dppxpkq7qahap" path="res://assets/images/NES - Contra - Bill & Lance_nobg.png" id="1_pkj6l"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="3_hdy82"]
+[ext_resource type="Texture2D" uid="uid://qkyunqiospk4" path="res://assets/images/gui/button_xbox_digital_a_4.png" id="4_6ky23"]
+[ext_resource type="Texture2D" uid="uid://bjmqo8xnsru3a" path="res://assets/images/gui/button_xbox_digital_a_5.png" id="5_dp8wv"]
+[ext_resource type="Texture2D" uid="uid://ccodcoi2mqpb" path="res://assets/images/gui/button_xbox_digital_b_4.png" id="6_a6qss"]
+[ext_resource type="Texture2D" uid="uid://b36vokyofnbhe" path="res://assets/images/gui/button_xbox_digital_b_5.png" id="7_wy07h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sq26r"]
 atlas = ExtResource("1_pkj6l")
@@ -284,5 +289,27 @@ position = Vector2(25, 3)
 [node name="BulletTimer" type="Timer" parent="."]
 wait_time = 0.2
 autostart = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Joystick" parent="HUD" instance=ExtResource("3_hdy82")]
+offset_top = -105.0
+offset_bottom = 195.0
+scale = Vector2(0.4, 0.4)
+clampzone_size = 30.0
+joystick_mode = 1
+visibility_mode = 2
+
+[node name="Jump" type="TouchScreenButton" parent="HUD"]
+position = Vector2(357, 173)
+scale = Vector2(0.1, 0.1)
+texture_normal = ExtResource("4_6ky23")
+texture_pressed = ExtResource("5_dp8wv")
+
+[node name="Fire" type="TouchScreenButton" parent="HUD"]
+position = Vector2(391, 140)
+scale = Vector2(0.1, 0.1)
+texture_normal = ExtResource("6_a6qss")
+texture_pressed = ExtResource("7_wy07h")
 
 [connection signal="timeout" from="BulletTimer" to="." method="_on_bullet_timer_timeout"]

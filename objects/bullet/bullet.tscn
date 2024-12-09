@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4u5mf6tge7gj"]
+[gd_scene load_steps=7 format=3 uid="uid://c4u5mf6tge7gj"]
 
 [ext_resource type="Texture2D" uid="uid://dppxpkq7qahap" path="res://assets/images/NES - Contra - Bill & Lance_nobg.png" id="1_l7xgw"]
 [ext_resource type="Script" path="res://objects/bullet/bullet.gd" id="1_xn6dj"]
+[ext_resource type="AudioStream" uid="uid://dt4h7jrlw83q0" path="res://assets/audio/laserShoot.wav" id="3_km780"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5wofq"]
 atlas = ExtResource("1_l7xgw")
@@ -30,3 +31,13 @@ sprite_frames = SubResource("SpriteFrames_bs0tc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ejafp")
 disabled = true
+
+[node name="EndTime" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="ShootAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_km780")
+autoplay = true
+
+[connection signal="timeout" from="EndTime" to="." method="_on_end_time_timeout"]

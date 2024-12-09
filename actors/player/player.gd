@@ -15,12 +15,15 @@ enum PlayerState {
 @onready var anim = $AnimatedSprite2D
 @onready var stateLabel = $State
 @onready var bulletStart = $BulletStartPoint
+@onready var joystick = $HUD/Joystick
+@onready var jumpButton = $HUD/Jump
+@onready var fireButton = $HUD/Fire
 
 @onready var bulletScene = preload("res://objects/bullet/bullet.tscn")
 
 
-@export var SPEED = 150.0
-const JUMP_VELOCITY = -400.0
+@export var SPEED = 80.0
+const JUMP_VELOCITY = -300.0
 
 var _state: PlayerState
 var facing_direction = 1
@@ -44,7 +47,7 @@ func _physics_process(delta: float) -> void:
 
 func _manageInputs():
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_accept") or jumpButton.is_pressed() and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -55,17 +58,21 @@ func _manageInputs():
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	facing_direction = int(direction) if direction != 0 else facing_direction
+	print(direction)
+	if direction != 0:
+		facing_direction = direction
+
 	anim.flip_h = facing_direction < 0
 
 	_toggleFire()
 
 
 func _toggleFire() -> void:
-	if Input.is_action_just_pressed("fire") and not in_fire:
+	in_fire = false
+
+	if Input.is_action_pressed("fire") or fireButton.is_pressed():
 		in_fire = true
-	if Input.is_action_just_released("fire"):
-		in_fire = false
+	
 
 func _applyGravity(delta: float) -> void:
 	# Add the gravity.
@@ -79,7 +86,7 @@ func _manageState() -> void:
 	elif is_on_floor() and velocity.x != 0.0 and not in_fire:
 		_changeState(PlayerState.RUN)
 
-	elif not is_on_floor() and velocity.y < 0.0:
+	elif not is_on_floor():
 		_changeState(PlayerState.JUMP)
 
 	elif is_on_floor() and velocity.x != 0.0 and in_fire:
@@ -125,5 +132,4 @@ func _on_bullet_timer_timeout() -> void:
 		bullet.global_position.x -= 50
 
 	bullet.direction = facing_direction
-	print(facing_direction)
 	get_parent().add_child(bullet)
