@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4u5mf6tge7gj"]
+
+[ext_resource type="Texture2D" uid="uid://dppxpkq7qahap" path="res://assets/images/NES - Contra - Bill & Lance_nobg.png" id="1_l7xgw"]
+[ext_resource type="Script" path="res://objects/bullet/bullet.gd" id="1_xn6dj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wofq"]
+atlas = ExtResource("1_l7xgw")
+region = Rect2(286, 805, 10, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bs0tc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wofq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ejafp"]
+radius = 3.16228
+
+[node name="Bullet" type="CharacterBody2D"]
+script = ExtResource("1_xn6dj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bs0tc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ejafp")
+disabled = true
