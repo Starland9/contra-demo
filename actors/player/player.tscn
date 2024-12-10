@@ -291,6 +291,7 @@ wait_time = 0.2
 autostart = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Joystick" parent="HUD" instance=ExtResource("3_hdy82")]
 offset_top = -105.0

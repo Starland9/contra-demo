@@ -1,28 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmgr2fvkpxwbo"]
+[gd_scene load_steps=6 format=3 uid="uid://bmgr2fvkpxwbo"]
 
 [ext_resource type="PackedScene" uid="uid://ccjosrnasvp6k" path="res://actors/player/player.tscn" id="1_62uq2"]
-[ext_resource type="PackedScene" uid="uid://id8wiix62vgi" path="res://scenes/level/level.tscn" id="2_el023"]
+[ext_resource type="Texture2D" uid="uid://cdrdgtyhlmv7v" path="res://assets/images/Assets_area_1/Tileset/Subway_tiles.png" id="1_ohn8t"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_irhdj"]
+texture = ExtResource("1_ohn8t")
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_cpygx"]
+sources/0 = SubResource("TileSetAtlasSource_irhdj")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7y4r5"]
 size = Vector2(1216, 20)
 
 [node name="Test" type="Node2D"]
 
-[node name="Level" parent="." instance=ExtResource("2_el023")]
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_cpygx")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(568, 359)
+visible = false
+position = Vector2(485, 204)
 shape = SubResource("RectangleShape2D_7y4r5")
 
 [node name="Player" parent="." instance=ExtResource("1_62uq2")]
+visible = false
 position = Vector2(94, 69)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(60, 20)
+visible = false
+position = Vector2(159, 11)
+zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
 limit_bottom = 224
 limit_smoothed = true
+position_smoothing_enabled = true
 editor_draw_limits = true

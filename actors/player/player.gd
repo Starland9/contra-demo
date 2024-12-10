@@ -15,9 +15,10 @@ enum PlayerState {
 @onready var anim = $AnimatedSprite2D
 @onready var stateLabel = $State
 @onready var bulletStart = $BulletStartPoint
-@onready var joystick = $HUD/Joystick
-@onready var jumpButton = $HUD/Jump
-@onready var fireButton = $HUD/Fire
+@onready var hud = $HUD
+@onready var joystick = hud.get_node("Joystick")
+@onready var jumpButton = hud.get_node("Jump")
+@onready var fireButton = hud.get_node("Fire")
 
 @onready var bulletScene = preload("res://objects/bullet/bullet.tscn")
 
@@ -33,6 +34,10 @@ var in_fire: bool = false
 func _ready() -> void:
 	_changeState(PlayerState.IDLE)
 	stateLabel.hide()
+
+	# if is android or ios
+	if not (OS.get_name() == "Android" or OS.get_name() == "iOS"):
+		hud.hide()
 
 
 func _physics_process(delta: float) -> void:
@@ -58,7 +63,6 @@ func _manageInputs():
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	print(direction)
 	if direction != 0:
 		facing_direction = direction
 
@@ -98,7 +102,7 @@ func _manageState() -> void:
 	
 func _changeState(state: PlayerState) -> void:
 	if state != _state:
-		print("change state ", PlayerState.keys()[_state], "->", PlayerState.keys()[state])
+		# print("change state ", PlayerState.keys()[_state], "->", PlayerState.keys()[state])
 
 		_state = state
 		_updateAnim(state)
@@ -133,3 +137,4 @@ func _on_bullet_timer_timeout() -> void:
 
 	bullet.direction = facing_direction
 	get_parent().add_child(bullet)
+
