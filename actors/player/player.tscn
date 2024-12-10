@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://ccjosrnasvp6k"]
+[gd_scene load_steps=46 format=3 uid="uid://ccjosrnasvp6k"]
 
 [ext_resource type="Script" path="res://actors/player/player.gd" id="1_4sbx4"]
 [ext_resource type="Texture2D" uid="uid://dppxpkq7qahap" path="res://assets/images/NES - Contra - Bill & Lance_nobg.png" id="1_pkj6l"]
@@ -7,6 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://bjmqo8xnsru3a" path="res://assets/images/gui/button_xbox_digital_a_5.png" id="5_dp8wv"]
 [ext_resource type="Texture2D" uid="uid://ccodcoi2mqpb" path="res://assets/images/gui/button_xbox_digital_b_4.png" id="6_a6qss"]
 [ext_resource type="Texture2D" uid="uid://b36vokyofnbhe" path="res://assets/images/gui/button_xbox_digital_b_5.png" id="7_wy07h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n27c8"]
+atlas = ExtResource("1_pkj6l")
+region = Rect2(910, 0, 65, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akwcv"]
+atlas = ExtResource("1_pkj6l")
+region = Rect2(910, 0, 65, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o430f"]
+atlas = ExtResource("1_pkj6l")
+region = Rect2(975, 0, 65, 67)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sq26r"]
 atlas = ExtResource("1_pkj6l")
@@ -132,8 +144,35 @@ region = Rect2(260, 67, 65, 67)
 atlas = ExtResource("1_pkj6l")
 region = Rect2(325, 67, 65, 67)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwyp2"]
+atlas = ExtResource("1_pkj6l")
+region = Rect2(780, 0, 65, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exm6o"]
+atlas = ExtResource("1_pkj6l")
+region = Rect2(845, 0, 65, 67)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_0yq1a"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n27c8")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akwcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o430f")
+}],
+"loop": true,
+"name": &"crouch_fire",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sq26r")
@@ -261,6 +300,25 @@ animations = [{
 "loop": true,
 "name": &"run_fire_up",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwyp2")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwyp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exm6o")
+}],
+"loop": true,
+"name": &"up_fire",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7oaqg"]
@@ -271,8 +329,7 @@ script = ExtResource("1_4sbx4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0yq1a")
-animation = &"idle"
-frame_progress = 0.674104
+animation = &"crouch_fire"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
