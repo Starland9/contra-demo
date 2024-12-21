@@ -327,9 +327,12 @@ radius = 6.0
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_4sbx4")
 
+[node name="BulletStartPoint" type="Marker2D" parent="."]
+position = Vector2(2, 4)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0yq1a")
-animation = &"crouch_fire"
+animation = &"idle"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -339,9 +342,6 @@ shape = SubResource("CapsuleShape2D_7oaqg")
 [node name="State" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-
-[node name="BulletStartPoint" type="Marker2D" parent="."]
-position = Vector2(25, 3)
 
 [node name="BulletTimer" type="Timer" parent="."]
 wait_time = 0.2

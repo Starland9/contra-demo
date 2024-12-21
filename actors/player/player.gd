@@ -31,8 +31,9 @@ enum PlayerState {
 const JUMP_VELOCITY = -300.0
 
 var _state: PlayerState
-var facing_direction = 1
+var facing_direction: float = 1
 var direction : Vector2
+var arm_direction :=  Vector2(1, 0)
 var in_fire: bool = false
 var in_up: bool = false
 var in_crouch: bool = false
@@ -75,10 +76,14 @@ func _manageInputs():
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	if direction.x != 0:
+	if direction.x != 0.0:
 		facing_direction = direction.x
 
-	anim.flip_h = facing_direction < 0
+
+	if facing_direction > 0:
+		anim.flip_h = false
+	if facing_direction < 0:
+		anim.flip_h = true
 
 
 	
@@ -102,7 +107,7 @@ func _manageState() -> void:
 				_changeState(PlayerState.CROUCH)
 		elif velocity.x == 0.0:
 			_changeState(PlayerState.IDLE)
-		elif velocity.x != 0.0:
+		elif velocity.x != 0.0 and not in_fire:
 			_changeState(PlayerState.RUN)
 		elif in_fire:
 			if velocity.x != 0.0:
@@ -153,12 +158,22 @@ func _on_bullet_timer_timeout() -> void:
 	if not in_fire:
 		return
 
-	var bullet = bulletScene.instantiate()
+
+	if _state == PlayerState.CROUCH:
+		arm_direction = Vector2(facing_direction, 0)
+	elif direction != Vector2.ZERO:
+		arm_direction = direction
+	else:
+		arm_direction = Vector2(facing_direction, 0)
+
+	var bullet: Bullet = bulletScene.instantiate()
 	bullet.global_position = bulletStart.global_position
 
-	if facing_direction < 0:
-		bullet.global_position.x -= 50
+	if _state == PlayerState.CROUCH:
+		bullet.direction = Vector2(facing_direction, 0)
+		bullet.position += Vector2(0, 12)
 
-	bullet.direction = facing_direction
+	bullet.position += arm_direction * 25
+	bullet.direction = arm_direction
 	get_parent().add_child(bullet)
 
